@@ -45,21 +45,37 @@ module.exports = {
         }
 
         if (msg.content.startsWith("!m_pause")) {
+            if (dispatcher === undefined) {
+                return msg.reply("No audio is currently playing.")
+            }
+
             msg.reply("Pausing audio playback... (use \"!m_resume\" to resume playback)");
             dispatcher.pause();
         }
 
         if (msg.content.startsWith("!m_resume")) {
+            if (dispatcher === undefined) {
+                return msg.reply("No audio is currently playing.")
+            }
+
             msg.reply("Resuming audio playback...");
             dispatcher.resume();
         }
 
         if (msg.content.startsWith("!m_stop")) {
+            if (dispatcher === undefined) {
+                return msg.reply("No audio is currently playing.")
+            }
+
             msg.reply("Stopping audio playback...");
             dispatcher.end();
         }
 
         if (msg.content.startsWith("!m_volume")) {
+            if (dispatcher === undefined) {
+                return msg.reply("No audio is currently playing.")
+            }
+
             var volume = parseInt(msg.content.substring(10));
             if (isNaN(volume)) {
                 return msg.reply("Please enter a numerical value.")
