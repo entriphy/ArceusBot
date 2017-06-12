@@ -82,14 +82,19 @@ module.exports = {
             if (dispatcher === undefined) {
                 return msg.reply("No audio is currently playing.")
             }
-            
+
             if (msg.content.includes(".")) {
                 var volume = parseFloat(msg.content.substring(10))
             } else var volume = parseInt(msg.content.substring(10));
 
+            if (volume < 0) {
+                return msg.reply("Negative volume? I don't know how to do that.");
+            }
+
             if (isNaN(volume)) {
                 return msg.reply("Please enter a numerical value.")
             }
+            
             msg.reply("Setting volume of audio playback to " + volume * 100 + "%...");
             dispatcher.setVolume(volume);
         }
