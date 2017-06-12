@@ -75,6 +75,11 @@ module.exports = {
                 return msg.reply("No audio is currently playing.")
             }
 
+            if (msg.content.includes("default")) {
+                dispatcher.setVolume(Config.defaultVolume);
+                return msg.reply("Setting volume to default (" + Config.defaultVolume * 100 + "%)...")
+            }
+
             if (msg.content.includes(".")) {
                 var volume = parseFloat(msg.content.substring(10))
             } else var volume = parseInt(msg.content.substring(10));
