@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const Identity = require('./Identity');
+const Config = require('./Config');
 const music = require("./Music");
 
 
@@ -16,4 +16,4 @@ client.on('message', msg => {
     }
 });
 
-client.login(Identity.token);
+client.login(Config.token);

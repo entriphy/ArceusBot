@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const Config = require('./Config')
 
 var dispatcher;
 const getVideoInfo = function(url, callback) {
@@ -10,6 +11,12 @@ const getVideoInfo = function(url, callback) {
 
 module.exports = {
     musicHandler: function(msg) {
+        if (Config.musicChannel !== undefined) {
+            if (msg.channel.name !== Config.musicChannel) {
+                return msg.reply("You must be in the #" + Config.musicChannel + " channel for music commands to work.")
+            }
+        }
+
         if (msg.content.startsWith("!m_play")) {
             if (!msg.content.substring(8).startsWith("https://www.youtube.com/watch?v=")) {
                 return msg.reply("Please enter a valid link (must start with https://www.youtube.com/watch?v=)");
