@@ -1,5 +1,4 @@
 # ArceusBot - A Node.js-based Discord bot
-----
 
 ## Usage
 ### Requirements:
@@ -23,3 +22,6 @@ $ npm start
 * ```!m_resume``` - Resume audio playback
 * ```!m_stop``` - Stop audio playback
 * ```!m_volume <number>``` - Set volume of current audio playback
+
+### Miscellaneous
+* ```!clean <messages>``` - Delete last specified number of messages
