@@ -15,3 +15,11 @@ $ cd ArceusBot/
 $ npm install
 $ npm start
 ```
+
+## Commands
+### Music Commands
+* ```!m_play <YouTube link>``` - Play audio from YouTube on current voice channel
+* ```!m_pause``` - Pause current audio playback
+* ```!m_resume``` - Resume audio playback
+* ```!m_stop``` - Stop audio playback
+* ```!m_volume <number>``` - Set volume of current audio playback
