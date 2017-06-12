@@ -13,7 +13,7 @@ module.exports = {
         }
 
         if (msg.content.startsWith("!m_play")) {
-            if (!msg.content.substring(8).startsWith("https://www.youtube.com/watch?v=")) {
+            if (!msg.content.substring(8).includes("youtube.com") && !msg.content.substring(8).includes("soundcloud.com")) {
                 return msg.reply("Please enter a valid link (must start with https://www.youtube.com/watch?v=)");
             }
 
