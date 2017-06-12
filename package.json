@@ -1,0 +1,23 @@
+{
+  "name": "arceusbot",
+  "version": "1.0.0",
+  "description": "A bot for Discord.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "Discord"
+  ],
+  "author": "evilarceus",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "node-opus": "^0.2.6",
+    "ytdl-core": "^0.14.2"
+  }
+}
