@@ -43,7 +43,7 @@ module.exports = {
                         });
 
                         dispatcher = connection.playStream(stream);
-                        dispatcher.setVolume(1);
+                        dispatcher.setVolume(Config.defaultVolume);
                         dispatcher.on('end', () => {
                             voiceChannel.leave();
                         })
