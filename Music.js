@@ -1,12 +1,7 @@
-const ytdl = require('ytdl-core');
+const youtubedl = require('youtube-dl');
 const Config = require('./Config')
 
 var dispatcher;
-const getVideoInfo = function(url, callback) {
-    ytdl.getInfo(url, function(error, info) {
-        callback(info);
-    });
-};
 
 
 module.exports = {
@@ -33,22 +28,19 @@ module.exports = {
                 return msg.reply("Please be in a valid voice channel.");
             }
 
-            getVideoInfo(url, function (info) {
-                voiceChannel.join()
-                    .then(connection => {
+            voiceChannel.join()
+                .then(connection => {
+                    var stream = youtubedl(url);
+                    stream.on('info', function(info) {
                         msg.reply("Now playing: " + info.title);
-
-                        var stream = ytdl(url, {
-                            filter: 'audioonly',
-                        });
 
                         dispatcher = connection.playStream(stream);
                         dispatcher.setVolume(Config.defaultVolume);
                         dispatcher.on('end', () => {
                             voiceChannel.leave();
                         })
-                    })
-            })
+                    });
+                });
         }
 
         if (msg.content.startsWith("!m_pause")) {
