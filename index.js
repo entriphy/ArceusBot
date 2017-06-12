@@ -1,10 +1,25 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const process = require('process');
 
 const Config = require('./Config');
 const music = require("./Music");
 const misc = require("./Misc");
 
+function checkConfig(callback) {
+    // Check if defaultVolume is an integer/float
+    var defaultVolume;
+
+    if (String(Config.defaultVolume).includes(".")) {
+        defaultVolume = parseFloat(Config.defaultVolume);
+    } else defaultVolume = parseInt(Config.defaultVolume);
+    if (isNaN(defaultVolume)) {
+        console.log("Please enter a correct value for option 'defaultVolume' (must be a number)")
+        process.exit(1);
+    }
+
+    callback();
+}
 
 client.on('ready', () => {
     console.log("Logged in as " + client.user.tag + "!");
@@ -20,4 +35,6 @@ client.on('message', msg => {
     }
 });
 
-client.login(Config.token);
+checkConfig(function() {
+    client.login(Config.token);
+});
