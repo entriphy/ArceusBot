@@ -13,10 +13,6 @@ module.exports = {
         }
 
         if (msg.content.startsWith("!m_play")) {
-            if (!msg.content.substring(8).includes("youtube.com") && !msg.content.substring(8).includes("soundcloud.com")) {
-                return msg.reply("Please enter a valid link (must start with https://www.youtube.com/watch?v=)");
-            }
-
             var url = msg.content.substring(8);
             if (url.includes("&")) {
                 url.substring(0, url.indexOf("&"))
@@ -30,15 +26,25 @@ module.exports = {
 
             voiceChannel.join()
                 .then(connection => {
-                    var stream = youtubedl(url);
-                    stream.on('info', function(info) {
-                        msg.reply("Now playing: " + info.title);
+                    youtubedl.getInfo(url, function (err, info) {
+                        if (err) {
+                            return msg.reply("Please enter a valid link")
+                        }
+                        else {
+                            var stream = youtubedl(url);
 
-                        dispatcher = connection.playStream(stream);
-                        dispatcher.setVolume(Config.defaultVolume);
-                        dispatcher.on('end', () => {
-                            voiceChannel.leave();
-                        })
+                            stream.on('info', function (info) {
+                                console.log(stream);
+                                console.log(info);
+                                msg.reply("Now playing: " + info.title);
+
+                                dispatcher = connection.playStream(stream);
+                                dispatcher.setVolume(Config.defaultVolume);
+                                dispatcher.on('end', () => {
+                                    voiceChannel.leave();
+                                })
+                            });
+                        }
                     });
                 });
         }
