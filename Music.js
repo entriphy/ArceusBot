@@ -7,7 +7,10 @@ var dispatcher;
 module.exports = {
     musicHandler: function(msg) {
         if (Config.musicChannel !== undefined) {
-            if (msg.channel.name !== Config.musicChannel) {
+            if (Config.musicChannel === null && !msg.content.startsWith("!m_whitelist")) {
+                return msg.reply("Music commands are currently disabled.");
+            }
+            if (msg.channel.name !== Config.musicChannel && !msg.content.startsWith("!m_whitelist")) {
                 return msg.reply("You must be in the #" + Config.musicChannel + " channel for music commands to work.")
             }
         }
