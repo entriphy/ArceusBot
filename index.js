@@ -22,6 +22,11 @@ function checkConfig(callback) {
     callback();
 }
 
+function cleanup() {
+    console.log("Logging out...");
+    client.destroy().then(process.exit(0))
+}
+
 client.on('ready', () => {
     console.log("Logged in as " + client.user.tag + "!");
     console.log("Logged into " + client.guilds.array().length + " channels!");
@@ -35,6 +40,9 @@ client.on('message', msg => {
         misc.clean(msg);
     }
 });
+
+// On Ctrl+C, cleanly shutdown
+process.on('SIGINT', cleanup.bind(true));
 
 checkConfig(function() {
     client.login(Config.token);
