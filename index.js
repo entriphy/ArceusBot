@@ -23,7 +23,7 @@ function checkConfig(callback) {
 
 client.on('ready', () => {
     console.log("Logged in as " + client.user.tag + "!");
-    console.log("Logged into channels: " + client.channels.array());
+    console.log("Logged into " + client.guilds.array().length + " channels!");
 });
 
 client.on('message', msg => {
