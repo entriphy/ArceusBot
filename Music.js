@@ -97,9 +97,35 @@ module.exports = {
             if (isNaN(volume)) {
                 return msg.reply("Please enter a numerical value.")
             }
-            
+
             msg.reply("Setting volume of audio playback to " + volume * 100 + "%...");
             dispatcher.setVolume(volume);
+        }
+
+        if (msg.content.startsWith("!m_whitelist")) {
+            var tchannel = msg.content.substring(13);
+
+            if (tchannel === "" || tchannel === null) {
+                var _whitelistChannel = Config.musicChannel;
+                if (_whitelistChannel === undefined) { _whitelistChannel = "ALL" }
+                if (_whitelistChannel === null) {_whitelistChannel = "NONE"}
+                return msg.reply("```!m_whitelist - Set music channel to whitelist. Current: " + _whitelistChannel + "```");
+            }
+
+            if (tchannel === "NONE") {
+                Config.musicChannel = null;
+                return msg.reply("Setting music command whitelist to NONE.");
+            }
+
+            if (tchannel === "ALL") {
+                Config.musicChannel = undefined;
+                return(msg.reply("Setting music command whitelist to ALL channels."));
+            }
+
+            else {
+                Config.musicChannel = tchannel;
+                return msg.reply("Setting music command whitelist to #" + tchannel + ".");
+            }
         }
     }
 };
