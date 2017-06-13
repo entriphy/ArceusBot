@@ -39,7 +39,8 @@ module.exports = {
                     stream.on('info', function (info) {
                         voiceChannel.join()
                             .then(connection => {
-                                msg.reply("Now playing: " + info.title);
+                                msg.reply("Now playing: **" + info.title + "** in voice channel **" +
+                                    msg.member.voiceChannel.name + "**.");
 
                                 dispatcher = connection.playStream(stream);
                                 dispatcher.setVolume(Config.defaultVolume);
