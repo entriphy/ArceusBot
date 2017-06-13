@@ -37,10 +37,8 @@ module.exports = {
                             var stream = youtubedl(url);
 
                             stream.on('info', function (info) {
-                                console.log(stream);
-                                console.log(info);
                                 msg.reply("Now playing: " + info.title);
-
+                                
                                 dispatcher = connection.playStream(stream);
                                 dispatcher.setVolume(Config.defaultVolume);
                                 dispatcher.on('end', () => {
