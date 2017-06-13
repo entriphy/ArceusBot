@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+exports.client = client;
 const process = require('process');
 
 const Config = require('./Config');

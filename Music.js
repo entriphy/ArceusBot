@@ -1,5 +1,6 @@
 const youtubedl = require('youtube-dl');
-const Config = require('./Config')
+const Config = require('./Config');
+const client = require('./index').client;
 
 var dispatcher;
 
@@ -51,11 +52,13 @@ module.exports = {
                             .then(connection => {
                                 msg.reply("Now playing: **" + info.title + "** in voice channel **" +
                                     msg.member.voiceChannel.name + "**.");
+                                client.user.setGame(info.title);
 
                                 // Play audio in voice channel and all that stuff
                                 dispatcher = connection.playStream(stream);
                                 dispatcher.setVolume(Config.defaultVolume);
                                 dispatcher.on('end', () => {
+                                    client.user.setGame("");
                                     voiceChannel.leave();
                                 })
                             })
