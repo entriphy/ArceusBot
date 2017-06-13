@@ -7,8 +7,8 @@ var dispatcher;
 
 module.exports = {
     musicHandler: function(msg) {
-        if (Config.musicChannel !== undefined) {
-            if (Config.musicChannel === null && !msg.content.startsWith("!m_whitelist")) {
+        if (Config.musicChannel !== true) {
+            if (Config.musicChannel === false && !msg.content.startsWith("!m_whitelist")) {
                 return msg.reply("Music commands are currently disabled.");
             }
             if (msg.channel.name !== Config.musicChannel && !msg.content.startsWith("!m_whitelist")) {
@@ -140,20 +140,20 @@ module.exports = {
             // Give user command reference if an argument wasn't given
             if (tchannel === "" || tchannel === null) {
                 var _whitelistChannel = Config.musicChannel;
-                if (_whitelistChannel === undefined) { _whitelistChannel = "ALL" }
-                if (_whitelistChannel === null) {_whitelistChannel = "NONE"}
+                if (_whitelistChannel === true) { _whitelistChannel = "ALL" }
+                if (_whitelistChannel === false) {_whitelistChannel = "NONE"}
                 return msg.reply("```!m_whitelist - Set music channel to whitelist. Current: " + _whitelistChannel + "```");
             }
 
             // Set whitelisted channel to none (disable music commands)
             if (tchannel === "NONE") {
-                Config.musicChannel = null;
+                Config.musicChannel = false;
                 return msg.reply("Setting music command whitelist to NONE.");
             }
 
             // Set whitelisted channel to all (enable music commands across all channels)
             if (tchannel === "ALL") {
-                Config.musicChannel = undefined;
+                Config.musicChannel = true;
                 return(msg.reply("Setting music command whitelist to ALL channels."));
             }
 

@@ -4,8 +4,13 @@ module.exports = {
     /* Bot token */
     token: 'TOKEN HERE',
     /* If you want to limit music commands to a certain channel, enter it here.
-     * Comment this line out if you don't want to limit it to a certain channel. */
-    musicChannel: 'music',
+     * Default: true (allowed everywhere)
+     * Valid options:
+        * true: Allow music commands everywhere
+        * false: Disallow music commands everywhere
+        * "<channelName>": Allow music command in specified channel
+    */
+    musicChannel: true,
 
     /* Set default volume for music
      * Default: 1
