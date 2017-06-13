@@ -27,27 +27,29 @@ module.exports = {
                 return msg.reply("Please be in a valid voice channel.");
             }
 
-            voiceChannel.join()
-                .then(connection => {
-                    youtubedl.getInfo(url, function (err, info) {
-                        if (err) {
-                            return msg.reply("Please enter a valid link")
-                        }
-                        else {
-                            var stream = youtubedl(url);
+            msg.reply("Getting video/audio information...");
 
-                            stream.on('info', function (info) {
+            youtubedl.getInfo(url, function (err, info) {
+                if (err) {
+                    return msg.reply("Please enter a valid link")
+                }
+                else {
+                    var stream = youtubedl(url);
+
+                    stream.on('info', function (info) {
+                        voiceChannel.join()
+                            .then(connection => {
                                 msg.reply("Now playing: " + info.title);
-                                
+
                                 dispatcher = connection.playStream(stream);
                                 dispatcher.setVolume(Config.defaultVolume);
                                 dispatcher.on('end', () => {
                                     voiceChannel.leave();
                                 })
-                            });
-                        }
+                            })
                     });
-                });
+                }
+            });
         }
 
         if (msg.content.startsWith("!m_pause")) {
