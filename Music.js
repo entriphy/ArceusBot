@@ -6,7 +6,7 @@ var dispatcher;
 var queue = [];
 var queueTitles = [];
 
-function whatDoINameThisFunction(url, voiceChannel, textChannel) {
+function startVoiceStream(url, voiceChannel, textChannel) {
 
     // Get audio stream information using node-youtube-dl
     var stream = youtubedl(url, null, {maxBuffer: 1024 * 500});
@@ -29,7 +29,7 @@ function whatDoINameThisFunction(url, voiceChannel, textChannel) {
                         client.user.setGame("");
                         voiceChannel.leave();
                     } else {
-                        whatDoINameThisFunction(queue[0], voiceChannel, textChannel);
+                        startVoiceStream(queue[0], voiceChannel, textChannel);
                     }
                 })
             })
@@ -83,7 +83,7 @@ module.exports = {
                     if (queue.length > 1) {
                         return msg.reply("Successfully added to queue: **" + info.title + "**");
                     }
-                    whatDoINameThisFunction(queue[0], voiceChannel, msg.channel);
+                    startVoiceStream(queue[0], voiceChannel, msg.channel);
                 }
             });
         }
