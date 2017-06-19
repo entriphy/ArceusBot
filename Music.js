@@ -9,7 +9,7 @@ var queueTitles = [];
 function whatDoINameThisFunction(url, voiceChannel, textChannel) {
 
     // Get audio stream information using node-youtube-dl
-    var stream = youtubedl(url);
+    var stream = youtubedl(url, null, {maxBuffer: 1024 * 500});
 
     stream.on('info', function (info) {
         // Join voice channel
@@ -72,7 +72,7 @@ module.exports = {
 
             msg.reply("Getting video/audio information...");
 
-            youtubedl.getInfo(url, function (err, info) {
+            youtubedl.getInfo(url, null, {maxBuffer: 1024 * 500}, function (err, info) {
                 if (err) {
                     // Invalid or unsupported link
                     return msg.reply("Please enter a valid link")
