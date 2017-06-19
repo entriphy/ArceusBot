@@ -28,6 +28,8 @@ function startVoiceStream(url, voiceChannel, textChannel) {
                     if (queue.length === 0) {
                         client.user.setGame("");
                         voiceChannel.leave();
+                        // Clear dispatcher so other commands work correctly
+                        dispatcher = undefined;
                     } else {
                         startVoiceStream(queue[0], voiceChannel, textChannel);
                     }
