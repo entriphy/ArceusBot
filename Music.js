@@ -6,6 +6,13 @@ var dispatcher;
 var queue = [];
 var queueTitles = [];
 
+/**
+ * Play audio stream from URL in specified voice channel
+ *
+ * @param {String} url
+ * @param {VoiceChannel} voiceChannel
+ * @param {TextChannel} textChannel
+ */
 function startVoiceStream(url, voiceChannel, textChannel) {
 
     // Get audio stream information using node-youtube-dl
@@ -17,20 +24,25 @@ function startVoiceStream(url, voiceChannel, textChannel) {
             .then(connection => {
                 textChannel.send("Now playing: **" + info.title + "** (" + info.webpage_url + ") in voice channel **" +
                     voiceChannel.name + "**.");
+                // Set game title to current song title
                 client.user.setGame(info.title);
 
                 // Play audio in voice channel and all that stuff
                 dispatcher = connection.playStream(stream);
                 dispatcher.setVolume(Config.defaultVolume);
                 dispatcher.on('end', () => {
+                    // Remove last played song from queue
                     queue.shift();
                     queueTitles.shift();
+
+                    // Cleanup if there are no more songs in the queue
                     if (queue.length === 0) {
                         client.user.setGame("");
                         voiceChannel.leave();
                         // Clear dispatcher so other commands work correctly
                         dispatcher = undefined;
                     } else {
+                        // Play next song in queue
                         startVoiceStream(queue[0], voiceChannel, textChannel);
                     }
                 })
@@ -41,11 +53,13 @@ function startVoiceStream(url, voiceChannel, textChannel) {
 
 module.exports = {
     musicHandler: function(msg) {
-        if (Config.musicChannel !== true) {
-            if (Config.musicChannel === false && !msg.content.startsWith("!m_whitelist")) {
+        // Handle music command whitelisting
+        if (Config.musicChannel !== true && !msg.content.startsWith("!m_whitelist")) {
+            if (Config.musicChannel === false) {
                 return msg.reply("Music commands are currently disabled.");
             }
-            if (msg.channel.name !== Config.musicChannel && !msg.content.startsWith("!m_whitelist")) {
+
+            if (msg.channel.name !== Config.musicChannel) {
                 return msg.reply("You must be in the #" + Config.musicChannel + " channel for music commands to work.")
             }
         }
@@ -60,6 +74,7 @@ module.exports = {
                 url.substring(0, url.indexOf("&"))
             }
 
+            // Prevent duplicate songs in the queue
             if (queue.includes(url)) {
                 return msg.reply("Song already in queue!");
             }
@@ -119,7 +134,12 @@ module.exports = {
                 return msg.reply("No audio is currently playing.")
             }
 
-            msg.reply("Skipping current song...");
+            // Change reply based on if there's a song left in the queue
+            if (queue.length === 1) {
+                msg.reply("No more songs left in queue; stopping audio playback...")
+            } else {
+                msg.reply("Skipping current song...");
+            }
             dispatcher.end();
         }
 
@@ -172,10 +192,12 @@ module.exports = {
 
         /* !m_queue command */
         if (msg.content.startsWith("!m_queue")) {
+            // Return if there are no songs in the queue
             if (queueTitles.length === 0) {
                 return msg.reply("There were no songs found in the queue.");
             }
 
+            // Get all songs in the queue
             var currentQueue = "";
             for (var i = 0; i < queueTitles.length; i++) {
                 currentQueue += "**[" + i + "]** " + queueTitles[i] + "\n";
