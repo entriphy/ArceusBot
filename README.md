@@ -3,16 +3,22 @@
 ## Usage
 ### Requirements:
 * [Node.js](https://nodejs.org/en/)
-* Discord Bot Token (from [here](https://discordapp.com/developers/applications/me))
+* [Discord Bot Token](https://discordapp.com/developers/applications/me)
 
 ### To start:
-In a terminal session: 
+In a terminal session:
 
 ```bash
 $ git clone https://github.com/evilarceus/ArceusBot
 $ cd ArceusBot/
 $ npm install
 $ npm start
+```
+
+* Make sure to paste your bot token in Config.js (line 5):
+```
+/* Bot token */
+token: 'TOKEN HERE',
 ```
 
 ## Commands
