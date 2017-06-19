@@ -56,6 +56,10 @@ module.exports = {
                 url.substring(0, url.indexOf("&"))
             }
 
+            if (queue.includes(url)) {
+                return msg.reply("Song already in queue!");
+            }
+
             // Get voice channel to join
             const voiceChannel = msg.member.voiceChannel;
 
