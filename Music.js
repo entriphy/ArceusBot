@@ -4,6 +4,7 @@ const client = require('./index').client;
 
 var dispatcher;
 var queue = [];
+var queueTitles = [];
 
 function whatDoINameThisFunction(url, voiceChannel, textChannel) {
 
@@ -23,6 +24,7 @@ function whatDoINameThisFunction(url, voiceChannel, textChannel) {
                 dispatcher.setVolume(Config.defaultVolume);
                 dispatcher.on('end', () => {
                     queue.shift();
+                    queueTitles.shift();
                     if (queue.length === 0) {
                         client.user.setGame("");
                         voiceChannel.leave();
@@ -77,6 +79,7 @@ module.exports = {
                 }
                 else {
                     queue.push(url);
+                    queueTitles.push(info.title);
                     if (queue.length > 1) {
                         return msg.reply("Successfully added to queue: **" + info.title + "**");
                     }
@@ -163,6 +166,20 @@ module.exports = {
             // Set playback volume
             msg.reply("Setting volume of audio playback to " + volume * 100 + "%...");
             dispatcher.setVolume(volume);
+        }
+
+        /* !m_queue command */
+        if (msg.content.startsWith("!m_queue")) {
+            if (queueTitles.length === 0) {
+                return msg.reply("There were no songs found in the queue.");
+            }
+
+            var currentQueue = "";
+            for (var i = 0; i < queueTitles.length; i++) {
+                currentQueue += "**[" + i + "]** " + queueTitles[i] + "\n";
+            }
+
+            msg.reply("**Queue:**\n" + currentQueue);
         }
 
         /* !m_volume command */
