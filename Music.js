@@ -3,7 +3,37 @@ const Config = require('./Config');
 const client = require('./index').client;
 
 var dispatcher;
+var queue = [];
 
+function whatDoINameThisFunction(url, voiceChannel, textChannel) {
+
+    // Get audio stream information using node-youtube-dl
+    var stream = youtubedl(url);
+
+    stream.on('info', function (info) {
+        // Join voice channel
+        voiceChannel.join()
+            .then(connection => {
+                textChannel.send("Now playing: **" + info.title + "** (" + info.webpage_url + ") in voice channel **" +
+                    voiceChannel.name + "**.");
+                client.user.setGame(info.title);
+
+                // Play audio in voice channel and all that stuff
+                dispatcher = connection.playStream(stream);
+                dispatcher.setVolume(Config.defaultVolume);
+                dispatcher.on('end', () => {
+                    queue.shift();
+                    if (queue.length === 0) {
+                        client.user.setGame("");
+                        voiceChannel.leave();
+                    } else {
+                        whatDoINameThisFunction(queue[0], voiceChannel, textChannel);
+                    }
+                })
+            })
+    });
+
+}
 
 module.exports = {
     musicHandler: function(msg) {
@@ -42,27 +72,11 @@ module.exports = {
                     return msg.reply("Please enter a valid link")
                 }
                 else {
-                    // Get audio stream information using node-youtube-dl
-                    var stream = youtubedl(url);
-
-                    // Wait until stream loads
-                    stream.on('info', function (info) {
-                        // Join voice channel
-                        voiceChannel.join()
-                            .then(connection => {
-                                msg.reply("Now playing: **" + info.title + "** (" + info.webpage_url + ") in voice channel **" +
-                                    msg.member.voiceChannel.name + "**.");
-                                client.user.setGame(info.title);
-
-                                // Play audio in voice channel and all that stuff
-                                dispatcher = connection.playStream(stream);
-                                dispatcher.setVolume(Config.defaultVolume);
-                                dispatcher.on('end', () => {
-                                    client.user.setGame("");
-                                    voiceChannel.leave();
-                                })
-                            })
-                    });
+                    queue.push(url);
+                    if (queue.length > 1) {
+                        return msg.reply("Successfully added to queue: **" + info.title + "**");
+                    }
+                    whatDoINameThisFunction(queue[0], voiceChannel, msg.channel);
                 }
             });
         }
