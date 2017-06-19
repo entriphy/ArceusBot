@@ -50,7 +50,7 @@ module.exports = {
                         // Join voice channel
                         voiceChannel.join()
                             .then(connection => {
-                                msg.reply("Now playing: **" + info.title + "** in voice channel **" +
+                                msg.reply("Now playing: **" + info.title + "** (" + info.webpage_url + ") in voice channel **" +
                                     msg.member.voiceChannel.name + "**.");
                                 client.user.setGame(info.title);
 
