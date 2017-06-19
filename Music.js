@@ -107,14 +107,28 @@ module.exports = {
             dispatcher.resume();
         }
 
-        /* !m_stop command */
-        if (msg.content.startsWith("!m_stop")) {
+        /* !m_stop + !m_skip command */
+        if (msg.content.startsWith("!m_stop") || msg.content.startsWith("!m_skip")) {
             // Return if there's no audio playing
             if (dispatcher === undefined) {
                 return msg.reply("No audio is currently playing.")
             }
 
-            msg.reply("Stopping audio playback...");
+            msg.reply("Skipping current song...");
+            dispatcher.end();
+        }
+
+        /* !m_clear command */
+        if (msg.content.startsWith("!m_clear")) {
+            // Return if there's no audio playing
+            if (dispatcher === undefined) {
+                return msg.reply("No audio is currently playing.")
+            }
+
+            // Clear queue
+            queue = [];
+
+            msg.reply("Clearing queue and stopping audio playback...");
             dispatcher.end();
         }
 
