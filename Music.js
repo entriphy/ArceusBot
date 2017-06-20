@@ -205,36 +205,5 @@ module.exports = {
 
             msg.reply("**Queue:**\n" + currentQueue);
         }
-
-        /* !m_volume command */
-        if (msg.content.startsWith("!m_whitelist")) {
-            var tchannel = msg.content.substring(13);
-
-            // Give user command reference if an argument wasn't given
-            if (tchannel === "" || tchannel === null) {
-                var _whitelistChannel = Config.musicChannel;
-                if (_whitelistChannel === true) { _whitelistChannel = "ALL" }
-                if (_whitelistChannel === false) {_whitelistChannel = "NONE"}
-                return msg.reply("```!m_whitelist - Set music channel to whitelist. Current: " + _whitelistChannel + "```");
-            }
-
-            // Set whitelisted channel to none (disable music commands)
-            if (tchannel === "NONE") {
-                Config.musicChannel = false;
-                return msg.reply("Setting music command whitelist to NONE.");
-            }
-
-            // Set whitelisted channel to all (enable music commands across all channels)
-            if (tchannel === "ALL") {
-                Config.musicChannel = true;
-                return(msg.reply("Setting music command whitelist to ALL channels."));
-            }
-
-            // Set whitelisted channel to what the user specifies
-            else {
-                Config.musicChannel = tchannel;
-                return msg.reply("Setting music command whitelist to #" + tchannel + ".");
-            }
-        }
     }
 };

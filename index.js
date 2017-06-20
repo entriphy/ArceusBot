@@ -39,6 +39,9 @@ client.on('message', msg => {
     if (msg.content.startsWith("!clean")) {
         misc.clean(msg);
     }
+    if (msg.content.startsWith("!config")) {
+        Config.configHandler(msg);
+    }
 });
 
 // On Ctrl+C, cleanly shutdown
