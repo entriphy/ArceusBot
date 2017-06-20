@@ -54,7 +54,7 @@ function startVoiceStream(url, voiceChannel, textChannel) {
 module.exports = {
     musicHandler: function(msg) {
         // Handle music command whitelisting
-        if (Config.musicChannel !== true && !msg.content.startsWith("!m_whitelist")) {
+        if (Config.musicChannel !== true) {
             if (Config.musicChannel === false) {
                 return msg.reply("Music commands are currently disabled.");
             }

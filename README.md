@@ -30,8 +30,6 @@ token: 'TOKEN HERE',
 * ```!m_stop/!m_skip``` - Skip current song
 * ```!m_queue``` - Show current song queue
 * ```!m_volume <number>``` - Set volume of current audio playback
-* ```!m_whitelist <channel>``` - Set whitelisted channel for music commands
-    * Can be set to NONE and ALL channels (case-sensitive)
 
 ### Miscellaneous
 * ```!clean <messages>``` - Delete last specified number of messages
