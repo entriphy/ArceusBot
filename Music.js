@@ -76,6 +76,7 @@ module.exports = {
 
             // Prevent duplicate songs in the queue
             if (queue.includes(url)) {
+                msg.react("❌");
                 return msg.reply("Song already in queue!");
             }
 
@@ -84,6 +85,7 @@ module.exports = {
 
             // Return if the user is not in a voice channel
             if (!voiceChannel) {
+                msg.react("❌");
                 return msg.reply("Please be in a valid voice channel.");
             }
 
@@ -92,14 +94,17 @@ module.exports = {
             youtubedl.getInfo(url, null, {maxBuffer: 1024 * 500}, function (err, info) {
                 if (err) {
                     // Invalid or unsupported link
+                    msg.react("❌");
                     return msg.reply("Please enter a valid link")
                 }
                 else {
                     queue.push(url);
                     queueTitles.push(info.title);
                     if (queue.length > 1) {
+                        msg.react("✅");
                         return msg.reply("Successfully added to queue: **" + info.title + "**");
                     }
+                    msg.react("✅");
                     startVoiceStream(queue[0], voiceChannel, msg.channel);
                 }
             });
