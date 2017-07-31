@@ -16,7 +16,7 @@ var queueTitles = [];
 function startVoiceStream(url, voiceChannel, textChannel) {
 
     // Get audio stream information using node-youtube-dl
-    var stream = youtubedl(url, null, {maxBuffer: 1024 * 500});
+    var stream = youtubedl(url, ["-f", "bestaudio"], {maxBuffer: 1024 * 500});
 
     stream.on('info', function (info) {
         // Join voice channel
