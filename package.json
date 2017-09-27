@@ -4,7 +4,9 @@
   "description": "A bot for Discord.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start:bot": "node index.js",
+    "start:dev": "NODE_ENV=development concurrently \"node server.js\" \"npm run start:bot\"",
+    "start": "NODE_ENV=production concurrently \"webpack --config webpack.prod.config.js && node server.js\" \"npm run start:bot\""
   },
   "repository": {
     "type": "git",
@@ -32,9 +34,12 @@
     "react-swipeable-views": "^0.12.8",
     "react-tap-event-plugin": "^2.0.1",
     "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
     "youtube-dl": "^1.11.1"
   },
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
   }

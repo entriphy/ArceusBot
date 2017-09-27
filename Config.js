@@ -17,6 +17,11 @@ module.exports = {
      * Recommended: 0.5 (for sound clarity) */
     defaultVolume: 1,
 
+    /* Port for the web server to listen on
+     * Default: 8080
+    */
+    port: 8080,
+
     configHandler: function(msg) {
         // Get config option the user wants to change
         var option = msg.content.substring(8, msg.content.indexOf(" ", 8));
