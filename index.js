@@ -7,6 +7,7 @@ const configFile = require("./config");
 const Config = require('./core/Config');
 const music = require("./core/Music");
 const misc = require("./core/Misc");
+const google = require("./core/Google");
 
 function checkConfig(callback) {
     // Check if defaultVolume is an integer/float
@@ -42,6 +43,9 @@ client.on('message', msg => {
     }
     if (msg.content.startsWith("!config")) {
         Config.configHandler(msg);
+    }
+    if (msg.content.startsWith("!image")) {
+        google.imageHandler(msg);
     }
 });
 
