@@ -3,19 +3,20 @@ const client = new Discord.Client();
 exports.client = client;
 const process = require('process');
 
-const Config = require('./Config');
-const music = require("./Music");
-const misc = require("./Misc");
+const configFile = require("./config");
+const Config = require('./core/Config');
+const music = require("./core/Music");
+const misc = require("./core/Misc");
 
 function checkConfig(callback) {
     // Check if defaultVolume is an integer/float
     var defaultVolume;
 
-    if (String(Config.defaultVolume).includes(".")) {
-        defaultVolume = parseFloat(Config.defaultVolume);
-    } else defaultVolume = parseInt(Config.defaultVolume);
+    if (String(configFile.defaultVolume).includes(".")) {
+        defaultVolume = parseFloat(configFile.defaultVolume);
+    } else defaultVolume = parseInt(configFile.defaultVolume);
     if (isNaN(defaultVolume)) {
-        console.log("Please enter a correct value for option 'defaultVolume' (must be a number)")
+        console.log("Please enter a correct value for option 'defaultVolume' (must be a number)");
         process.exit(1);
     }
 
@@ -48,5 +49,5 @@ client.on('message', msg => {
 process.on('SIGINT', cleanup.bind(true));
 
 checkConfig(function() {
-    client.login(Config.token);
+    client.login(configFile.token);
 });

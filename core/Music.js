@@ -1,6 +1,6 @@
 const youtubedl = require('youtube-dl');
-const Config = require('./Config');
-const client = require('./index').client;
+const Config = require('../config');
+const client = require('../index').client;
 
 var dispatcher;
 var queue = [];
