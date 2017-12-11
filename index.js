@@ -47,6 +47,9 @@ client.on('message', msg => {
     if (msg.content.startsWith("!image")) {
         google.imageHandler(msg);
     }
+    if (msg.content.startsWith("!wikipedia")) {
+        google.wikipediaHandler(msg);
+    }
 });
 
 // On Ctrl+C, cleanly shutdown
