@@ -52,7 +52,11 @@ function startVoiceStream(url, voiceChannel, textChannel) {
 }
 
 module.exports = {
+
     musicHandler: function(msg) {
+        // Get command arguments
+        const args = msg.content.trim().split(/ +/g);
+
         // Handle music command whitelisting
         if (Config.musicChannel !== true) {
             if (Config.musicChannel === false) {
@@ -177,8 +181,8 @@ module.exports = {
 
             // Parse to integer/float depending on what the user inputted
             if (msg.content.includes(".")) {
-                var volume = parseFloat(msg.content.substring(10))
-            } else var volume = parseInt(msg.content.substring(10));
+                var volume = parseFloat(args[1])
+            } else var volume = parseInt(args[1]);
 
             // Return if the number is negative
             if (volume < 0) {

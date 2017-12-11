@@ -2,21 +2,16 @@ const Config = require('../config');
 
 module.exports = {
     configHandler: function(msg) {
-        // Get config option the user wants to change
-        var option = msg.content.substring(8, msg.content.indexOf(" ", 8));
-        // If user did not specify an argument
-        if (option === "!config ") {
-            // TODO: Cleaner version of whatever this is
-            option = msg.content.substring(8);
-        }
+        const args = msg.content.trim().split(/ +/g);
+        var option = args[1];
 
         /* musicChannel config */
         if (option === "musicChannel") {
-            var tchannel = msg.content.substring(21);
+            var tchannel = args[2];
 
             // Give user command reference if an argument wasn't given
             if (tchannel === "" || tchannel === null) {
-                var _whitelistChannel = this.musicChannel;
+                var _whitelistChannel = Config.musicChannel;
                 if (_whitelistChannel === true) { _whitelistChannel = "ALL" }
                 if (_whitelistChannel === false) {_whitelistChannel = "NONE"}
                 return msg.reply("```musicChannel - Set music channel to whitelist. Current: " + _whitelistChannel + "```");
@@ -43,7 +38,7 @@ module.exports = {
 
         /* defaultVolume config */
         if (option === "defaultVolume") {
-            var volume = msg.content.substring(22);
+            var volume = args[2]
 
             // Give user command reference if an argument wasn't given
             if (volume === "" || volume === null) {
