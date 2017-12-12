@@ -1,8 +1,6 @@
 {
   "token": "TOKEN HERE",
-  "musicChannel": true,
-  "defaultVolume": 1,
-  "port": 8080
+  "port": 8080,
   "googleCSE": "",
   "googleCSE_APIKey": ""
 }

@@ -1,5 +1,4 @@
 const youtubedl = require('youtube-dl');
-const Config = require('../config');
 const client = require('../index').client;
 
 var dispatcher;
@@ -29,7 +28,7 @@ function startVoiceStream(url, voiceChannel, textChannel) {
 
                 // Play audio in voice channel and all that stuff
                 dispatcher = connection.playStream(stream);
-                dispatcher.setVolume(Config.defaultVolume);
+                dispatcher.setVolume(require("../configs/" + voiceChannel.guild.id).defaultVolume); /* lol delete this */
                 dispatcher.on('end', () => {
                     // Remove last played song from queue
                     queue.shift();
@@ -52,8 +51,8 @@ function startVoiceStream(url, voiceChannel, textChannel) {
 }
 
 module.exports = {
-
     musicHandler: function(msg) {
+        const Config = require("../configs/" + msg.guild.id);
         // Get command arguments
         const args = msg.content.trim().split(/ +/g);
 

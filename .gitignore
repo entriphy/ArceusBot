@@ -59,3 +59,7 @@ typings/
 
 # JetBrains
 .idea/
+
+# Configs
+configs/*
+!configs/default.json
