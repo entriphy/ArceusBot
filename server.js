@@ -3,7 +3,7 @@ var path = require('path');
 var process = require('process');
 var fs = require('fs');
 var app = express();
-var cfg = require("./Config")
+var cfg = require("./config")
 
 if (process.env.NODE_ENV === "development") {
     console.warn("Development environment detected - using middleware");

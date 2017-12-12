@@ -22,7 +22,6 @@ client.on('ready', () => {
         fs.exists("configs/" + id + ".json", function(exists) {
             if (!exists) {
                 // Create configs if they don't exist
-                console.log("Creating " + id + ".json...");
                 fs.createReadStream("./configs/default.json").pipe(fs.createWriteStream("./configs/" + id +".json"))
             }
         })
@@ -30,6 +29,17 @@ client.on('ready', () => {
 
     console.log("Logged in as " + client.user.tag + "!");
     console.log("Logged into " + client.guilds.array().length + " channels!");
+});
+
+client.on("guildCreate", guild => {
+    const id = guild.id;
+    fs.exists("configs/" + id + ".json", function(exists) {
+        if (!exists) {
+            // Create config if it doesn't exist
+            console.log("[config] Creating " + id + ".json...");
+            fs.createReadStream("./configs/default.json").pipe(fs.createWriteStream("./configs/" + id +".json"))
+        }
+    })
 });
 
 client.on('message', msg => {

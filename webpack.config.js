@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const cfg = require("./Config");
+const cfg = require("./config");
 
 module.exports = {
     entry: {
