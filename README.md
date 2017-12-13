@@ -31,5 +31,9 @@ token: 'TOKEN HERE',
 * ```!m_queue``` - Show current song queue
 * ```!m_volume <number>``` - Set volume of current audio playback
 
+### Web Commands
+* ```!image <query>``` - Search Google Images for an image and display it in chat
+* ```!wikipedia <query>``` - Search for a Wikipedia article and display it in chat
+
 ### Miscellaneous
 * ```!clean <messages>``` - Delete last specified number of messages
