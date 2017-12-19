@@ -60,6 +60,10 @@ typings/
 # JetBrains
 .idea/
 
-# Configs
+# Stuff
+config.json
 configs/*
 !configs/default.json
+dist/
+.vscode/
+package-lock.json
