@@ -26,7 +26,7 @@ function checkForUpdates() {
             let answer = require("readline-sync").question("A newer commit is available! Would you like to update? [y/n] ");
             if (answer.toLowerCase() === "y") {
                 console.log("Updating to latest commit...");
-                const pull = require("child_process").execSync("git pull origin master", {stdio: "ignore"});
+                const pull = require("child_process").execSync("git reset --hard origin/master", {stdio: "ignore"});
                 console.log("Update finished! Please relaunch the bot.");
                 process.exit(0);
             }
@@ -84,5 +84,8 @@ client.on('message', msg => {
 // On Ctrl+C, cleanly shutdown
 process.on('SIGINT', cleanup.bind(true));
 
-// Login bot to Discord!
-client.login(configFile.token);
+// Check for updates
+checkForUpdates();
+
+// Check for updates and login bot to Discord!
+client.login(configFile.token)
