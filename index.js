@@ -15,6 +15,27 @@ function cleanup() {
     client.destroy().then(process.exit(0))
 }
 
+function checkForUpdates() {
+    if (configFile.checkForUpdates === false) return;
+    console.log("Checking for updates...");
+    if (fs.existsSync(".git")) {
+        const fetch = require("child_process").execSync("git fetch origin", {stdio: "ignore"});
+        const localCommit = require("child_process").execSync("git rev-parse HEAD").toString().trim();
+        const latestCommit = require("child_process").execSync("git rev-parse origin/master").toString().trim();
+        if (localCommit !== latestCommit) {
+            let answer = require("readline-sync").question("A newer commit is available! Would you like to update? [y/n] ");
+            if (answer.toLowerCase() === "y") {
+                console.log("Updating to latest commit...");
+                const pull = require("child_process").execSync("git pull origin master", {stdio: "ignore"});
+                console.log("Update finished! Please relaunch the bot.");
+                process.exit(0);
+            }
+            else return;
+        }
+        else console.log("The bot is up-to-date!");
+    }
+}
+
 client.on('ready', () => {
     console.log("Making sure all configs are ready...");
     for (var i = 0; i < client.guilds.array().length; i++) {

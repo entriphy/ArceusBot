@@ -3,4 +3,5 @@
   "port": 8080,
   "googleCSE": "",
   "googleCSE_APIKey": ""
+  "checkForUpdates": true
 }
