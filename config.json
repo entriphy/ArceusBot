@@ -2,6 +2,6 @@
   "token": "TOKEN HERE",
   "port": 8080,
   "googleCSE": "",
-  "googleCSE_APIKey": ""
+  "googleCSE_APIKey": "",
   "checkForUpdates": true
 }
