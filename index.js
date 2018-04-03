@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 exports.client = client;
@@ -66,6 +67,9 @@ client.on("guildCreate", guild => {
 client.on('message', msg => {
     if (msg.content.startsWith("!m")) {
         music.musicHandler(msg);
+    }
+    if (!fs.stat(path.join(__dirname, "/music/" + msg.content.replace("!", "")), (err) => { if (err) return false; })) {
+        music.startFileStream(msg.content.replace("!", ""), msg.member.voiceChannel);
     }
     if (msg.content.startsWith("!clean")) {
         misc.clean(msg);

@@ -67,3 +67,4 @@ configs/*
 dist/
 .vscode/
 package-lock.json
+music/

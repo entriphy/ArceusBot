@@ -1,5 +1,7 @@
 const youtubedl = require('youtube-dl');
 const client = require('../index').client;
+const fs = require("fs");
+const path = require("path");
 
 var dispatcher;
 var queue = [];
@@ -47,10 +49,30 @@ function startVoiceStream(url, voiceChannel, textChannel) {
                 })
             })
     });
+}
 
+/**
+ * Play audio stream from file in specified voice channel
+ *
+ * @param {String} file
+ * @param {VoiceChannel} voiceChannel
+ */
+function _startFileStream (file, voiceChannel) {
+    if (!voiceChannel) return;
+    const filePath = path.join(__dirname, "..", "music", file + ".mp3")
+
+    voiceChannel.join().then(connection => {
+        dispatcher = connection.playFile(filePath)
+        dispatcher.setVolume(require("../configs/" + voiceChannel.guild.id).defaultVolume);
+        dispatcher.on("end", () => {
+            voiceChannel.leave();
+            dispatcher = undefined;
+        })
+    })
 }
 
 module.exports = {
+    startFileStream: function(file, voiceChannel) {_startFileStream(file, voiceChannel)},
     musicHandler: function(msg) {
         const Config = require("../configs/" + msg.guild.id);
         // Get command arguments
