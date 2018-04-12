@@ -1,5 +1,6 @@
 {
   "token": "TOKEN HERE",
+  "userID": "",
   "port": 8080,
   "googleCSE": "",
   "googleCSE_APIKey": "",
