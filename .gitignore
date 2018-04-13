@@ -67,5 +67,5 @@ configs/*
 dist/
 .vscode/
 package-lock.json
-music/
+/music/
 settings.sqlite3

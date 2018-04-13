@@ -25,7 +25,6 @@ module.exports = {
             .then(connection => {
                 dispatcher = connection.playStream(stream, {volume: 0.5, passes: 3})
                 msg.guild.settings.set("dispatcher", dispatcher);
-                console.log(dispatcher);
                 msg.channel.send("Now playing: **" + queueTitles[0] + "**");
                 dispatcher.on('end', () => {
                     // Remove last played song from queue
