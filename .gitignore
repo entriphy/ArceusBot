@@ -68,3 +68,4 @@ dist/
 .vscode/
 package-lock.json
 music/
+settings.sqlite3

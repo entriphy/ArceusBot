@@ -1,24 +1,27 @@
-const config = require("../config");
-const googleImages = require("google-images");
+const commando = require("discord.js-commando");
 const wiki = require('wikijs').default;
-var client;
-if (config.googleCSE && config.googleCSE_APIKey) {
-    client = new googleImages(config.googleCSE, config.googleCSE_APIKey);
-}
 const Discord = require("discord.js");
 
-module.exports = {
-    imageHandler: function(msg) {
-        if (!client) return msg.reply("Google Custom Search is not set up properly.");
-        const query = msg.content.substring(7);
-        // ignore this lol
-        if (msg.author.username === "WillyJ") { return msg.reply("No.") }
-        client.search(query).then(images => msg.channel.send(images[0].url));
-    },
+module.exports = class WikipediaCommand extends commando.Command {
+    constructor(client) {
+        super (client, {
+            name: "wikipedia",
+            group: "fun",
+            memberName: "wikipedia",
+            description: "Searches for an article on Wikipedia and responds with the summary",
+            argsCount: 1,
+            args: [{
+                key: "query",
+                label: "query",
+                prompt: "Enter your search query.",
+                type: "string",
+            }]
+        })
+    }
 
-    wikipediaHandler: function(msg) {
-        var query = msg.content.substring(11);
-        var embed = new Discord.RichEmbed()
+    async run(msg, args) {
+        let query = args.query;
+        let embed = new Discord.RichEmbed()
             .setColor(0xFAFAFA)
             .setAuthor("Wikipedia", "https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1200px-Wikipedia-logo-v2.svg.png")
             .setImage("https://n6-img-fp.akamaized.net/free-icon/wikipedia-logo_318-50187.jpg?size=180&ext=png");
@@ -35,8 +38,8 @@ module.exports = {
                     msg.channel.send({embed});
                 });
             });
-        }, function() {
+        }, () => {
             return msg.reply("An article with that name was not found.")
         });
     }
-};
+}
