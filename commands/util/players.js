@@ -1,5 +1,4 @@
 const ytdl = require("ytdl-core");
-const youtubedl = require("node-youtube-dl");
 
 module.exports = {
     /**
