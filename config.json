@@ -1,8 +1,8 @@
 {
-  "token": "MzIzNjU4OTQ2MDYzNzYxNDI3.DQ94MQ.HwhlzXqQVzmbZSlN76f4KPikO4Y",
+  "token": "",
   "userID": "",
   "port": 8080,
-  "googleCSE": "015130125048437761105:fqgaiwd6w14",
-  "googleCSE_APIKey": "AIzaSyAo3TWR5mrZUjCPelRkoPRpQPPAl1NcpWI",
+  "googleCSE": "",
+  "googleCSE_APIKey": "",
   "checkForUpdates": true
 }
