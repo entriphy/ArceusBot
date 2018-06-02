@@ -1,4 +1,4 @@
-const ytdl = require("ytdl-core");
+const youtubedl = require("youtube-dl");
 
 module.exports = {
     /**
@@ -8,9 +8,8 @@ module.exports = {
      * @param {String} url
      */
     startVoiceStream: function (msg, url) {
-
         let voiceChannel = msg.member.voiceChannel;
-        let stream = ytdl(url, { filter: "audioonly" })
+        let stream = youtubedl(url, ["-f", "bestaudio"], {maxBuffer: 1024 * 500});
         let dispatcher = msg.guild.settings.get("dispatcher", undefined);
         let queue = msg.guild.settings.get("queue", []);
         let queueTitles = msg.guild.settings.get("queueTitles", [])

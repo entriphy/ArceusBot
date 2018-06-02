@@ -1,5 +1,5 @@
 const commando = require("discord.js-commando");
-const ytdl = require("ytdl-core");
+const youtubedl = require("youtube-dl");
 const players = require("../util/players");
 const path = require("path");
 const fs = require('fs');
@@ -56,14 +56,12 @@ module.exports = class PlayCommand extends commando.Command {
             queueTitles = [];
         }
 
-        ytdl.getInfo(url, (err, info) => {
+        youtubedl.getInfo(url, (err, info) => {
             if (err) return msg.reply("The URL you entered was invalid.");
-
             queue.push(url);
             queueTitles.push(info.title);
             msg.guild.settings.set("queue", queue);
             msg.guild.settings.set("queueTitles", queueTitles);
-
             if (queue.length > 1) {
                 msg.react("✅");
                 return msg.reply("Successfully added to queue: **" + info.title + "**");

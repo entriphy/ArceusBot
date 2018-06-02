@@ -30,7 +30,6 @@
     "readline-sync": "^1.4.9",
     "sqlite": "^2.9.1",
     "wikijs": "^4.6.2",
-    "youtube-dl": "1.11.1",
-    "ytdl-core": "^0.20.2"
+    "youtube-dl": "1.11.1"
   }
 }
