@@ -16,10 +16,6 @@ client.registry.registerGroups([
 ]).registerDefaults().registerCommandsIn(path.join(__dirname, "commands"));
 client.setProvider(sqlite.open(path.join(__dirname, "settings.sqlite3")).then(db => new Commando.SQLiteProvider(db))).catch(console.error);
 
-// process.on('unhandledRejection', (error) => {
-//     console.log('unhandledRejection', console.error(error));
-// });
-
 function cleanup() {
     console.log("Logging out...");
     client.destroy().then(process.exit(0))

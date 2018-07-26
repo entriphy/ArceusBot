@@ -24,6 +24,7 @@ module.exports = class PlayCommand extends commando.Command {
 
     async run(msg, args) {
         let url = args.url;
+        if (!url.startsWith("http://")) url = `ytsearch:"${url}"`; // Search for video from YouTube
         let musicChannel = msg.guild.settings.get("musicChannel", true)
         let voiceChannel = msg.member.voiceChannel;
         let dispatcher = msg.guild.settings.get("dispatcher", undefined);
